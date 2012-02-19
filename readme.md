@@ -4,9 +4,9 @@ Please update this document when you make changes that impact the build, prerequ
 
 This project uses tools contained submodule.  Either clone recursively or initialize all submodule after a clone.  You should update submodule whenever you pull a revision with "[SUBMODULE UPDATE]" in the comment.
 
-''''dos
+````dos
 git clone git@github.com:SouthsideSoftware/TeamCityBuildLight.git [path] --recursive
-''''
+````
 
 ##Prerequisites
 
