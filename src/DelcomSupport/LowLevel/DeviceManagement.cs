@@ -1,17 +1,12 @@
 ///  <summary>
 ///  Routines for detecting devices and receiving device notifications.
 ///  </summary>
-  
-using Microsoft.VisualBasic;
+
 using System;
-using System.Collections;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.InteropServices; 
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace HIDIOWINCS
+namespace DelcomSupport.LowLevel
 {
 	sealed internal partial class DeviceManagement
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using HIDIOWINCS;
+using DelcomSupport.LowLevel;
 using NUnit.Framework;
 using FluentAssertions;
 
@@ -25,23 +25,22 @@ namespace TeamCityBuildLight.Tests.Unit.Spikes
                 AllOff();
 
                 GreenOn();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 GreenFlash();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 GreenOff();
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
                 RedOn();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 RedFlash();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 RedOff();
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
                 BlueOn();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 BlueFlash();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 BlueOff();
-                Thread.Sleep(3000);
             } 
             finally
             {

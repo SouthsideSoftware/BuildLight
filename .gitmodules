@@ -1,0 +1,3 @@
+[submodule "tools/msbuild"]
+	path = tools/msbuild
+	url = git@github.com:SouthsideSoftware/MSBuildTools.git

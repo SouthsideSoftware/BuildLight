@@ -1,7 +1,5 @@
-using Microsoft.VisualBasic;
-using Microsoft.Win32.SafeHandles; 
+using Microsoft.Win32.SafeHandles;
 using System;
-using System.Data; 
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -15,7 +13,7 @@ using System.Windows.Forms;
 ///  </summary>
 ///  
 
-namespace HIDIOWINCS
+namespace DelcomSupport.LowLevel
 {    
     internal sealed partial class Hid  
     {         

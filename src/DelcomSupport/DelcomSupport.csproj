@@ -44,14 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Debugging.cs" />
-    <Compile Include="DebuggingDeclarations.cs" />
-    <Compile Include="DelcomHID.cs" />
-    <Compile Include="DeviceManagement.cs" />
-    <Compile Include="DeviceManagementDeclarations.cs" />
-    <Compile Include="FileIODeclarations.cs" />
-    <Compile Include="Hid.cs" />
-    <Compile Include="HidDeclarations.cs" />
+    <Compile Include="LowLevel\Debugging.cs" />
+    <Compile Include="LowLevel\DebuggingDeclarations.cs" />
+    <Compile Include="LowLevel\DelcomHID.cs" />
+    <Compile Include="LowLevel\DeviceManagement.cs" />
+    <Compile Include="LowLevel\DeviceManagementDeclarations.cs" />
+    <Compile Include="LowLevel\FileIODeclarations.cs" />
+    <Compile Include="LowLevel\Hid.cs" />
+    <Compile Include="LowLevel\HidDeclarations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

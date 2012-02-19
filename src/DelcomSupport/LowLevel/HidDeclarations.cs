@@ -1,13 +1,8 @@
-using Microsoft.Win32.SafeHandles; 
+using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.InteropServices; 
-using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
-namespace HIDIOWINCS
+namespace DelcomSupport.LowLevel
 {    
     internal sealed partial class Hid  
     {         

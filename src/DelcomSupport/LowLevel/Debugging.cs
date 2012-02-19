@@ -1,16 +1,10 @@
-using Microsoft.VisualBasic;
 using System;
-using System.Collections;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
 
 ///  <summary>
 ///  Used only in Debug.Write statements.
 ///  </summary>
 
-namespace HIDIOWINCS
+namespace DelcomSupport.LowLevel
 {    
     internal sealed partial class Debugging  
     {         

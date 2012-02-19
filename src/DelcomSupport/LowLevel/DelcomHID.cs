@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-// extra added for HID API
 using Microsoft.Win32.SafeHandles;
-using System.Runtime.InteropServices;   // Marshal functions
+using System.Runtime.InteropServices;
+// extra added for HID API
+
+// Marshal functions
 
 //using System.Collections;
 //using System.Data;
@@ -13,7 +12,7 @@ using System.Runtime.InteropServices;   // Marshal functions
 //using System.Runtime.InteropServices;
 //using System.Windows.Forms;
 
-namespace HIDIOWINCS
+namespace DelcomSupport.LowLevel
 {
     public class DelcomHID
     {

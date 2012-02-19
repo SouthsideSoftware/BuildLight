@@ -1,19 +1,11 @@
-using Microsoft.Win32.SafeHandles; 
+using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
-using System.Threading;
-
-///  <summary>
+using System;
+    ///  <summary>
 ///  API declarations relating to file I/O.
 ///  </summary>
 
-using System;
-using System.Collections;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace HIDIOWINCS
+namespace DelcomSupport.LowLevel
 {   
     internal sealed class FileIO  
     {         
