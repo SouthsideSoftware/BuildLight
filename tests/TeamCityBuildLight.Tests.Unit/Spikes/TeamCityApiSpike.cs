@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Xml.Linq;
 using FluentAssertions;
+using NLog;
 using NUnit.Framework;
 
 namespace TeamCityBuildLight.Tests.Unit.Spikes
@@ -17,6 +18,7 @@ namespace TeamCityBuildLight.Tests.Unit.Spikes
         private const string USER_NAME = "user";
         private const string PASSWORD = "password";
         private const string SERVER = "server";
+        private Logger logger = LogManager.GetCurrentClassLogger(); 
 
         [Test]
         public void GetStatus()
@@ -28,7 +30,7 @@ namespace TeamCityBuildLight.Tests.Unit.Spikes
             {
                 client.BaseAddress = new Uri(SERVER);
                 var response = client.GetStringAsync("/httpAuth/app/rest/cctray/projects.xml").Result;
-                Trace.WriteLine(string.Format("Response from server is {0}", response));
+                logger.Debug("Response from server is {0}", response);
 
                 var doc = XDocument.Parse(response);
                 doc.Should().NotBeNull();
