@@ -63,6 +63,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Core\BuildStatusCollectionTests.cs" />
+    <Compile Include="Core\BuildStatusTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spikes\TeamCityApiSpike.cs" />
     <Compile Include="Spikes\UsbLightSpike.cs" />
