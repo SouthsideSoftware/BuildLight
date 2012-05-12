@@ -49,6 +49,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildStatus.cs" />
+    <Compile Include="BuildStatusCollection.cs" />
     <Compile Include="CodeContracts\ParameterCheck.cs" />
     <Compile Include="CodeContracts\PreconditionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

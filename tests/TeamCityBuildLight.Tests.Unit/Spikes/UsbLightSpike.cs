@@ -16,6 +16,7 @@ namespace TeamCityBuildLight.Tests.Unit.Spikes
         private DelcomHID.HidTxPacketStruct TxCmd;
 
         [Test]
+        [Ignore("Spike")]
         public void ShouldTurnOnLight()
         {
 

@@ -160,15 +160,23 @@
     <Message Importance="high" Text="Testing in NUnit: $(TestDir)\%(NUnitTestItem.Identity)" Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"/>
 	<Message Importance="high" Text="ENVIRONMENT SPECIFIC TEST SKIPPED: $(TestDir)\%(NUnitTestItem.Identity)" Condition="$(SkipEnvironmentSpecificTests) and $(IsEnvironmentSpecificTest)"/>
     
+	<!--
+	Nunit runner is different version from lib in NuGet so we have to hardcode
+	
     <XmlRead XPath="//package[@id='NUnit']/@version"
              XmlFileName="$(TestProjectDir)\packages.config"
 			 Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)">
       <Output TaskParameter="Value" PropertyName="NUnitVersion"/>
     </XmlRead>
+    -->
+	
+	<PropertyGroup>
+	    <NUnitVersion>2.6.0.12051</NUnitVersion>
+    </PropertyGroup>
+	
+    <Message Importance="high" Text="NUnit: $(PackageDir)\NUnit.Runners.$(NUnitVersion)\tools\nunit-console.exe" Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"/>
 
-    <Message Importance="high" Text="NUnit: $(PackageDir)\Nunit.$(NUnitVersion)\tools\nunit-console.exe" Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"/>
-
-	<NUnit ToolPath="$(PackageDir)\NUnit.$(NUnitVersion)\tools"
+	<NUnit ToolPath="$(PackageDir)\NUnit.Runners.$(NUnitVersion)\tools"
 		   Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"
 		   Assemblies="$(TestDir)\%(NUnitTestItem.Identity).dll"
 		   OutputXmlFile="$(TestOutputDir)\%(NUnitTestItem.Identity).results.nunit.xml"/>

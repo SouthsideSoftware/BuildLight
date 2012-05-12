@@ -9,18 +9,20 @@ using System.Xml.Linq;
 using FluentAssertions;
 using NLog;
 using NUnit.Framework;
+using TeamCityBuildLight.Core;
 
 namespace TeamCityBuildLight.Tests.Unit.Spikes
 {
     [TestFixture]
     public class TeamCityApiSpike
     {
-        private const string USER_NAME = "user";
-        private const string PASSWORD = "password";
-        private const string SERVER = "server";
+        private const string USER_NAME = "";
+        private const string PASSWORD = "";
+        private const string SERVER = "";
         private Logger logger = LogManager.GetCurrentClassLogger(); 
 
         [Test]
+        [Ignore("Spike")]
         public void GetStatus()
         {
             using (var client = new HttpClient(new WebRequestHandler
@@ -32,8 +34,8 @@ namespace TeamCityBuildLight.Tests.Unit.Spikes
                 var response = client.GetStringAsync("/httpAuth/app/rest/cctray/projects.xml").Result;
                 logger.Debug("Response from server is {0}", response);
 
-                var doc = XDocument.Parse(response);
-                doc.Should().NotBeNull();
+                var status = new BuildStatusCollection(response);
+                status.Should().NotBeNull();
             }
 
         }
