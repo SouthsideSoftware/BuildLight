@@ -46,6 +46,14 @@ namespace TeamCityBuildLight.Tests.Unit.Core
         }
 
         [Test]
+        public void ShouldBeAbleToGetActivityFromTeamCity()
+        {
+            var teamCityElement = XElement.Parse(TEAM_CITY_DATA);
+            var status = new BuildStatus(teamCityElement);
+            status.Activity.Should().Be("Has pending changes");
+        }
+
+        [Test]
         public void ShouldThrowPreconditionExceptionIfPassedNullElement()
         {
             Action act = () => new BuildStatus(null);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using NLog;
 using TeamCityBuildLight.Core.CodeContracts;
+using System.Linq;
 
 namespace TeamCityBuildLight.Core
 {
@@ -14,6 +15,7 @@ namespace TeamCityBuildLight.Core
         {
             ParameterCheck.StringRequiredAndNotWhitespace(projectXml, "projectXml");
 
+            logger.Debug("test");
             try
             {
                 var doc = XDocument.Parse(projectXml);
@@ -24,8 +26,20 @@ namespace TeamCityBuildLight.Core
             }
             catch (Exception err)
             {
-                logger.ErrorException("Error parsing xml from TeamCity.", err);
+                logger.ErrorException("Error parsing xml from TeamCity", err);
             }
         }
+
+        public IndicatorStatus Status
+        {
+            get
+            {
+                if (Count == 0) return IndicatorStatus.Unknown;
+                if (this.Any(s => s.Activity == "Building")) return IndicatorStatus.Building;
+                if (this.Any(s => s.LastBuildStatus == "Failure")) return IndicatorStatus.Failure;
+                return IndicatorStatus.Success;
+            }
+        }
+
     }
 }

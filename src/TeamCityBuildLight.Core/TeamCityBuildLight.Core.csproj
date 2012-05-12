@@ -52,6 +52,7 @@
     <Compile Include="BuildStatusCollection.cs" />
     <Compile Include="CodeContracts\ParameterCheck.cs" />
     <Compile Include="CodeContracts\PreconditionException.cs" />
+    <Compile Include="IndicatorStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

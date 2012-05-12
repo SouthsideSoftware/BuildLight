@@ -15,6 +15,7 @@ namespace TeamCityBuildLight.Core
         public string LastBuildStatus { get; private set; }
         public string Project { get; private set; }
         public string Configuration { get; private set; }
+        public string Activity { get; private set; }
 
         public BuildStatus(XElement projectElement)
         {
@@ -33,6 +34,7 @@ namespace TeamCityBuildLight.Core
                         Configuration = nameParts[1].Trim();
                     }
                 }
+                Activity = GetAttributeValue(projectElement, "activity");
 
                 foreach (var xAttribute in projectElement.Attributes())
                 {

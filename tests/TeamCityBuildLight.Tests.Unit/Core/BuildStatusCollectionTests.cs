@@ -57,5 +57,91 @@ namespace TeamCityBuildLight.Tests.Unit.Core
 
             new BuildStatusCollection(teamCityData).Count.Should().BeGreaterThan(0);
         }
+
+        [Test]
+        public void ShouldHaveKnownStatusWhenPassedAtLeastOneProjectElementFromTeamCity()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Success\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData).Status.Should().NotBe(IndicatorStatus.Unknown);
+        }
+
+        [Test]
+        public void ShouldHaveUnknownStatusWhenPassedNoProjectElementsFromTeamCity()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Unknown);
+        }
+
+        [Test]
+        public void ShouldHaveUnknownStatusWhenPassedInvalidXmlFromTeamCity()
+        {
+            string teamCityData = "8dhd";
+
+            new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Unknown);
+        }
+
+        [Test]
+        public void ShouldHaveStatusBuildingIfAnyProjectIsBuilding()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Success\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "<Project activity=\"Building\" lastBuildLabel=\"6\" lastBuildStatus=\"Success\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Building);
+        }
+
+        [Test]
+        public void ShouldHaveStatusFailureIfNoProjectBuildingAndAtLeastOneProjectFailure()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Failure\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "<Project activity=\"Sleeping\" lastBuildLabel=\"6\" lastBuildStatus=\"Success\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Failure);
+        }
+
+        [Test]
+        public void ShouldHaveStatusSuccessIfNoProjectBuildingAndAllProjectsShowSuccess()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Status\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "<Project activity=\"Sleeping\" lastBuildLabel=\"6\" lastBuildStatus=\"Status\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Success);
+        }
+
+        [Test]
+        public void ShouldHaveStatusBuildingIfAtLeastOneProjectBuildingEventIfAndAtLeastOneProjectFailure()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Failure\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "<Project activity=\"Building\" lastBuildLabel=\"6\" lastBuildStatus=\"Failure\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Building);
+        }
     }
 }
