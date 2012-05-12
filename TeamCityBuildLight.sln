@@ -1,7 +1,38 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelcomSupport", "src\DelcomSupport\DelcomSupport.csproj", "{94F8A509-3051-49DF-993F-79B87D32DC28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamCityBuildLight.Tests.Unit", "tests\TeamCityBuildLight.Tests.Unit\TeamCityBuildLight.Tests.Unit.csproj", "{87787CAB-29AE-454E-9780-548CA03DF0C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F29CBDA0-8B6D-4485-A57C-F681458B2F08}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamCityBuildLight.Core", "src\TeamCityBuildLight.Core\TeamCityBuildLight.Core.csproj", "{66852681-E589-43EE-A259-9C18E6A77FA4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94F8A509-3051-49DF-993F-79B87D32DC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94F8A509-3051-49DF-993F-79B87D32DC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94F8A509-3051-49DF-993F-79B87D32DC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94F8A509-3051-49DF-993F-79B87D32DC28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87787CAB-29AE-454E-9780-548CA03DF0C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87787CAB-29AE-454E-9780-548CA03DF0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87787CAB-29AE-454E-9780-548CA03DF0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87787CAB-29AE-454E-9780-548CA03DF0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66852681-E589-43EE-A259-9C18E6A77FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66852681-E589-43EE-A259-9C18E6A77FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66852681-E589-43EE-A259-9C18E6A77FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66852681-E589-43EE-A259-9C18E6A77FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
