@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DelcomSupport.LowLevel;
 
 namespace DelcomSupport
 {
-    public class DelcomLight : IDisposable
+    public class DelcomLight : IDelcomLight
     {
         private readonly DelcomHID delcom = new DelcomHID();
         DelcomHID.HidTxPacketStruct txCmd;

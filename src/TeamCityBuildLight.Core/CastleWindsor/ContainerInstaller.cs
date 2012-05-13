@@ -5,6 +5,7 @@ using System.Text;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using DelcomSupport;
 
 namespace TeamCityBuildLight.Core.CastleWindsor
 {
@@ -12,7 +13,10 @@ namespace TeamCityBuildLight.Core.CastleWindsor
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            throw new NotImplementedException();
+            container.Register(
+                Component.For<IDelcomLight>().ImplementedBy<DelcomLight>(),
+                Component.For<IBuildIndicator>().ImplementedBy<DelcomUsbLightBuildIndicator>(),
+                Component.For<IBuildStatusChecker>().ImplementedBy<BuildStatusChecker>());
         }
     }
 }

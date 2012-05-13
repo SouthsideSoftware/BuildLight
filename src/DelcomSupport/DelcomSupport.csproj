@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="DelcomIndicatorState.cs" />
     <Compile Include="DelcomLight.cs" />
+    <Compile Include="IDelcomLight.cs" />
     <Compile Include="LowLevel\Debugging.cs" />
     <Compile Include="LowLevel\DebuggingDeclarations.cs" />
     <Compile Include="LowLevel\DelcomHID.cs" />

@@ -73,6 +73,7 @@
     <Compile Include="CodeContracts\ParameterCheck.cs" />
     <Compile Include="CodeContracts\PreconditionException.cs" />
     <Compile Include="DelcomUsbLightBuildIndicator.cs" />
+    <Compile Include="IBuildIndicator.cs" />
     <Compile Include="IBuildStatusChecker.cs" />
     <Compile Include="IndicatorStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,7 +84,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
