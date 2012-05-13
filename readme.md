@@ -1,4 +1,4 @@
-Please update this document when you make changes that impact the build, prerequisites for development or use of this repository.
+Beginning of framework for connecting a TeamCity build light or lamp.  Right now it only supports a red/green/blue LED light made by Delcom that connects to the USB port and is supported on Mac, Windows and Linux.  See below for more information.
 
 ##Prerequisites
 
