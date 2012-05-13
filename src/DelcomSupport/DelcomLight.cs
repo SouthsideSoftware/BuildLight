@@ -27,7 +27,7 @@ namespace DelcomSupport
                 AllOff();
                 switch (newState)
                 {
-                    case DelcomIndicatorState.S_olidGreen:
+                    case DelcomIndicatorState.SolidGreen:
                         GreenOn();
                         break;
                     case DelcomIndicatorState.SolidRed:
