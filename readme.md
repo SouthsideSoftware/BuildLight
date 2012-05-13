@@ -15,6 +15,18 @@ These items can all be installed using [Microsoft's Web Platform Installer](http
 
 This project uses Nuget to pull packages and the packages are not placed into the repository.  Therefore, you should build as shown above after a clone and before opening the solution in VS.NET to get the latest packages.  NuGet will check for latest packages whenever you build in VS.NET or at the command line.  
 
+## Configuring
+
+* In Nlog.config, adjust the location of the log file.  Default to a folder in \logs.
+* Set TeamCityUser, TeamCityPassword and TeamCityUrl in the configuraton file of the service
+* Install the service using TopShelf.  You can perform the default install after building in your bin\debug (or release) directory using default settings:
+
+'''
+TeamCityBuildLight.Service install
+'''
+
+Consult the [TopShelf Wiki](https://github.com/Topshelf/Topshelf/wiki/Command-Line) for more configuration options.
+
 ## Supported Versions of TeamCity
 
 * 7.x and higher
