@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using DelcomSupport;
 using DelcomSupport.LowLevel;
 using NUnit.Framework;
 using FluentAssertions;
@@ -12,200 +13,36 @@ namespace TeamCityBuildLight.Tests.Unit.Spikes
     [TestFixture]
     public class UsbLightSpike
     {
-        private DelcomHID Delcom = new DelcomHID();   // declare the Delcom class
-        private DelcomHID.HidTxPacketStruct TxCmd;
+        DelcomLight light = new DelcomLight();
 
         [Test]
         [Ignore("Spike")]
         public void ShouldTurnOnLight()
         {
-
-            Delcom.Open();
             try
             {
-                AllOff();
-
-                GreenOn();
+                light.ChangeIndicator(DelcomIndicatorState.SolidGreen);
                 Thread.Sleep(2000);
-                GreenFlash();
+                light.ChangeIndicator(DelcomIndicatorState.FlashingGreen);
                 Thread.Sleep(2000);
-                GreenOff();
+                light.ChangeIndicator(DelcomIndicatorState.Off);
                 Thread.Sleep(1000);
-                RedOn();
+                light.ChangeIndicator(DelcomIndicatorState.SolidRed);
                 Thread.Sleep(2000);
-                RedFlash();
+                light.ChangeIndicator(DelcomIndicatorState.FlashingRed);
                 Thread.Sleep(2000);
-                RedOff();
+                light.ChangeIndicator(DelcomIndicatorState.Off);
                 Thread.Sleep(1000);
-                BlueOn();
+                light.ChangeIndicator(DelcomIndicatorState.SolidBlue);
                 Thread.Sleep(2000);
-                BlueFlash();
+                light.ChangeIndicator(DelcomIndicatorState.FlashingBlue);
                 Thread.Sleep(2000);
-                BlueOff();
             } 
             finally
             {
-                AllOff();
-                Delcom.Close();
+                light.Dispose();
             }
         }
 
-        private void AllOff()
-        {
-            RedOff();
-            GreenOff();
-            BlueOff();
-        }
-
-        private void GreenOn()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 1;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd); // always disable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 1;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd);
-        }
-
-        private void GreenOff()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 1;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd);  // always disable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 0;
-            TxCmd.MSBData = 1;
-            Delcom.SendCommand(TxCmd);
-        }
-
-        private void GreenFlash()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 0;
-            TxCmd.MSBData = 1;
-            Delcom.SendCommand(TxCmd);  // enable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 1;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd); // and turn it on
-        }
-
-        private void RedOn()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 2;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd); // always disable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 2;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd);
-        }
-
-        private void RedOff()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 2;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd);  // always disable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 0;
-            TxCmd.MSBData = 2;
-            Delcom.SendCommand(TxCmd);
-        }
-
-        private void RedFlash()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 0;
-            TxCmd.MSBData = 2;
-            Delcom.SendCommand(TxCmd);  // enable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 2;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd); // and turn it on
-        }
-
-        private void BlueOn()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 2;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd); // always disable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 4;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd);
-        }
-
-        private void BlueOff()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 4;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd);  // always disable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 0;
-            TxCmd.MSBData = 4;
-            Delcom.SendCommand(TxCmd);
-        }
-
-        private void BlueFlash()
-        {
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 20;
-            TxCmd.LSBData = 0;
-            TxCmd.MSBData = 4;
-            Delcom.SendCommand(TxCmd);  // enable the flash mode 
-
-            TxCmd.MajorCmd = 101;
-            TxCmd.MinorCmd = 12;
-            TxCmd.LSBData = 4;
-            TxCmd.MSBData = 0;
-            Delcom.SendCommand(TxCmd); // and turn it on
-        }
-
-        private void Open()
-        {
-            if (Delcom.Open() == 0)
-            {
-                UInt32 SerialNumber, Version, Date, Month, Year;
-                SerialNumber = Version = Date = Month = Year = 0;
-                Delcom.GetDeviceInfo(ref SerialNumber, ref Version, ref Date, ref Month, ref Year);
-                Year += 2000;
-            }
-        }
-
-        private void Close()
-        {
-            Delcom.Close();
-        }
     }
 }

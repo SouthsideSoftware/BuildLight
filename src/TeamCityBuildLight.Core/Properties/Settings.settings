@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TeamCityBuildLight.Core" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="TeamCityUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">unknown</Value>
+    </Setting>
+    <Setting Name="TeamCityPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">unknown</Value>
+    </Setting>
+    <Setting Name="TeamCityUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://unknown:81</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
