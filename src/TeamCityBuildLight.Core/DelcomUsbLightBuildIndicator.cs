@@ -15,8 +15,8 @@ namespace TeamCityBuildLight.Core
             this.delcomLight = delcomLight;
         }
 
-        public void ShowIndicator(BuildStatusCollection buildStatusCollection){
-            switch (buildStatusCollection.Status)
+        public void ShowIndicator(IBuildStatusSource buildStatusSource){
+            switch (buildStatusSource.Status)
             {
                 case IndicatorStatus.Unknown:
                     delcomLight.ChangeIndicator(DelcomIndicatorState.Off);
@@ -28,7 +28,7 @@ namespace TeamCityBuildLight.Core
                     delcomLight.ChangeIndicator(DelcomIndicatorState.FlashingBlue);
                     break;
                 case IndicatorStatus.Failure:
-                    delcomLight.ChangeIndicator(DelcomIndicatorState.SolidRed);
+                    delcomLight.ChangeIndicator(DelcomIndicatorState.FlashingRed);
                     break;
             }
         }

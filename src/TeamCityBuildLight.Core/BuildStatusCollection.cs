@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace TeamCityBuildLight.Core
 {
-    public class BuildStatusCollection : List<BuildStatus>
+    public class BuildStatusCollection : List<BuildStatus>, IBuildStatusSource
     {
         private Logger logger = LogManager.GetCurrentClassLogger();
 
