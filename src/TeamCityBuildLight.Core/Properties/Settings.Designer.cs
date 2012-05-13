@@ -49,5 +49,14 @@ namespace TeamCityBuildLight.Core.Properties {
                 return ((string)(this["TeamCityUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int PollingIntervalSeconds {
+            get {
+                return ((int)(this["PollingIntervalSeconds"]));
+            }
+        }
     }
 }

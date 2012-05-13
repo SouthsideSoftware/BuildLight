@@ -17,7 +17,6 @@ namespace TeamCityBuildLight.Core
         {
             ParameterCheck.StringRequiredAndNotWhitespace(projectXml, "projectXml");
 
-            logger.Debug("test");
             try
             {
                 var doc = XDocument.Parse(projectXml);

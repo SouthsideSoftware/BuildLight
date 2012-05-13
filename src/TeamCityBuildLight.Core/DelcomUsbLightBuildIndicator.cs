@@ -9,7 +9,7 @@ namespace TeamCityBuildLight.Core
     public class DelcomUsbLightBuildIndicator : IBuildIndicator
     {
         readonly IDelcomLight delcomLight;
-
+        
         public DelcomUsbLightBuildIndicator(IDelcomLight delcomLight)
         {
             this.delcomLight = delcomLight;
@@ -31,6 +31,11 @@ namespace TeamCityBuildLight.Core
                     delcomLight.ChangeIndicator(DelcomIndicatorState.FlashingRed);
                     break;
             }
+        }
+
+        public void Clear()
+        {
+            delcomLight.ChangeIndicator(DelcomIndicatorState.Off);
         }
     }
 }

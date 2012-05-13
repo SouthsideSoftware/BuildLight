@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using DelcomSupport.LowLevel;
+using NLog;
 
 namespace DelcomSupport
 {
@@ -9,6 +10,8 @@ namespace DelcomSupport
     {
         private readonly DelcomHID delcom = new DelcomHID();
         DelcomHID.HidTxPacketStruct txCmd;
+        DelcomIndicatorState? state;
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         public DelcomLight()
         {
@@ -18,27 +21,32 @@ namespace DelcomSupport
 
         public void ChangeIndicator(DelcomIndicatorState newState)
         {
-            AllOff();
-            switch (newState)
+            if (state != newState)
             {
-                case DelcomIndicatorState.SolidGreen:
-                    GreenOn();
-                    break;
-                case DelcomIndicatorState.SolidRed:
-                    RedOn();
-                    break;
-                case DelcomIndicatorState.SolidBlue:
-                    BlueOn();
-                    break;
-                case DelcomIndicatorState.FlashingGreen:
-                    GreenFlash();
-                    break;
-                case DelcomIndicatorState.FlashingRed:
-                    RedFlash();
-                    break;
-                case DelcomIndicatorState.FlashingBlue:
-                    BlueFlash();
-                    break;
+                logger.Debug("Change Delcom build light to {0}", newState);
+                AllOff();
+                switch (newState)
+                {
+                    case DelcomIndicatorState.S_olidGreen:
+                        GreenOn();
+                        break;
+                    case DelcomIndicatorState.SolidRed:
+                        RedOn();
+                        break;
+                    case DelcomIndicatorState.SolidBlue:
+                        BlueOn();
+                        break;
+                    case DelcomIndicatorState.FlashingGreen:
+                        GreenFlash();
+                        break;
+                    case DelcomIndicatorState.FlashingRed:
+                        RedFlash();
+                        break;
+                    case DelcomIndicatorState.FlashingBlue:
+                        BlueFlash();
+                        break;
+                }
+                state = newState;
             }
         }
 

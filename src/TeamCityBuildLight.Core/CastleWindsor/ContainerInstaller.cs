@@ -6,6 +6,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using DelcomSupport;
+using TeamCityBuildLight.Core.Server;
 
 namespace TeamCityBuildLight.Core.CastleWindsor
 {
@@ -16,7 +17,8 @@ namespace TeamCityBuildLight.Core.CastleWindsor
             container.Register(
                 Component.For<IDelcomLight>().ImplementedBy<DelcomLight>(),
                 Component.For<IBuildIndicator>().ImplementedBy<DelcomUsbLightBuildIndicator>(),
-                Component.For<IBuildStatusChecker>().ImplementedBy<BuildStatusChecker>());
+                Component.For<IBuildStatusChecker>().ImplementedBy<BuildStatusChecker>(),
+                Component.For<IBuildStatusServer>().ImplementedBy<BuildStatusServer>());
         }
     }
 }
