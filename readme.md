@@ -21,9 +21,9 @@ This project uses Nuget to pull packages and the packages are not placed into th
 * Set TeamCityUser, TeamCityPassword and TeamCityUrl in the configuraton file of the service
 * Install the service using TopShelf.  You can perform the default install after building in your bin\debug (or release) directory using default settings:
 
-'''
+```
 TeamCityBuildLight.Service install
-'''
+```
 
 Consult the [TopShelf Wiki](https://github.com/Topshelf/Topshelf/wiki/Command-Line) for more configuration options.
 
