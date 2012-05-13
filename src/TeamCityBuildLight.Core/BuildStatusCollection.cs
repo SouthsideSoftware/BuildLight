@@ -11,6 +11,8 @@ namespace TeamCityBuildLight.Core
     {
         private Logger logger = LogManager.GetCurrentClassLogger();
 
+        public BuildStatusCollection(){}
+
         public BuildStatusCollection(string projectXml)
         {
             ParameterCheck.StringRequiredAndNotWhitespace(projectXml, "projectXml");
