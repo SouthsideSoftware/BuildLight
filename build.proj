@@ -19,6 +19,21 @@
   <PropertyGroup>
 	<DllsToTest>$(MsBuildProjectDirectory)\tests\BuildLight.Tests.Unit\bin\$(Configuration)\BuildLight.Tests.Unit.dll</DllsToTest>
   </PropertyGroup>
+  
+  <!-- Binary files to publish -->
+  <PropertyGroup>
+   <BinInclude>
+   src\BuildLight.Service\bin\$(Configuration)\*.*;
+   license.txt
+   </BinInclude>
+  </PropertyGroup>
+  
+    <ItemGroup>
+    <NugetItem Include="BuildLight">
+      <NugetPackageSummary>Build indicator for build server.</NugetPackageSummary>
+      <NugetPackageId>BuildLight</NugetPackageId>
+    </NugetItem>
+  </ItemGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\Tools\MSBuild\BuildSupport\Southside.Targets"/>
 </Project>

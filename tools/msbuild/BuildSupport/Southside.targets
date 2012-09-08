@@ -6,7 +6,7 @@
     <PackageDir>$(MSBuildProjectDirectory)\packages</PackageDir>
     <MSBuildCommunityTasksPath>$(ToolsDir)\MSBuild\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
     <SouthSideTasksPath>$(ToolsDir)\MSBuild\SouthSideBuildTasks</SouthSideTasksPath>
-    <NuGet>$(ToolsDir)\msbuild\nuget.exe</NuGet>
+    <NuGet>$(MSBuildProjectDirectory)\.nuget\nuget.exe</NuGet>
   </PropertyGroup>
 
   <!-- Artifact Directories -->
@@ -261,9 +261,7 @@
 	
 	<Message Importance="high" Text="Version for %(NugetItem.Identity) is $(PackageVersion)"/>
 	
-	<CallTarget Targets="CopyBinDeployableAssemblies"/>
-
-    <XmlUpdate XmlFileName="nuspec\%(NugetItem.Identity).nuspec"
+	<XmlUpdate XmlFileName="nuspec\%(NugetItem.Identity).nuspec"
                Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
                Prefix="n"
                XPath="//n:summary"
@@ -275,7 +273,7 @@
                XPath="//n:version"
                Value="$(PackageVersion)"/>
 
-    <Exec WorkingDirectory="$(NuGetPackageDir)" Command="$(NuGet) pack $(MSBuildProjectDirectory)\%(NugetItem.Identity).nuspec"/>
+    <Exec WorkingDirectory="$(NuGetPackageDir)" Command="$(NuGet) pack $(MSBuildProjectDirectory)\nuspec\%(NugetItem.Identity).nuspec"/>
   </Target>
 
   <Target Name="PublishNugetPackages" Condition="$(PublishNugetPackages)" DependsOnTargets="CreateNugetCredentials">
