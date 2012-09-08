@@ -18,6 +18,7 @@
     <TestOutputDir>$(OutputDir)\TestResults</TestOutputDir>
     <NuGetPackageDir>$(OutputDir)\NuGet</NuGetPackageDir>
 	<WebDir>$(OutputDir)\Web</WebDir>
+	<TempDir>$(OutputDir)\Temp</TempDir>
   </PropertyGroup>
 
   <!-- Help -->
@@ -101,7 +102,7 @@
     <Time>
       <Output TaskParameter="Year" PropertyName="Year"/>
     </Time>
-    <AssemblyInfo OutputFile="$(MSBuildProjectDirectory)\CommonAssemblyInfo.cs" CodeLanguage="C#"
+    <AssemblyInfo OutputFile="$(MSBuildProjectDirectory)\common\CommonAssemblyInfo.cs" CodeLanguage="C#"
             ComVisible="false" AssemblyCulture=""
             AssemblyVersion="$(AppVersion)"
             AssemblyFileVersion="$(AppVersion).$(BuildNumber)"
@@ -144,42 +145,24 @@
     <Message Importance="high" Text="Compile Seconds: $(ElapsedSeconds)"/>
   </Target>
 
-  <Target Name="Test" Condition="@(NUnitTestItem) != ''">
+  <!-- Due to issues with Nuget, the runner package must be added at the solution level and 
+       then the reference must be manually copied into the package.config of one of the projects so that it is
+	   always pulled down during a build.  Ronaele has it in Roanele.Web.UI.Tests-->
+  <Target Name="Test" Condition="$(DllsToTest) != ''">
     <Message Importance="high" Text="Test"/>
-    <CallTarget Targets="NUnitTests"/>
-  </Target>
-
-  <Target Name="NUnitTests" Outputs="%(NUnitTestItem.Identity)" Condition="@(NUnitTestitem) != ''">
-    <PropertyGroup>
-      <TestProjectDir>$(TestProjectBaseDir)\%(NUnitTestItem.Identity)</TestProjectDir>
-      <TestDir>$(TestProjectDir)\bin\$(Configuration)</TestDir>
-	  <IsEnvironmentSpecificTest Condition="%(NUnitTestItem.EnvironmentSpecific) == '' or !%(NUnitTestItem.EnvironmentSpecific)">false</IsEnvironmentSpecificTest>
-	  <IsEnvironmentSpecificTest Condition="%(NUnitTestItem.EnvironmentSpecific) != '' and %(NUnitTestItem.EnvironmentSpecific)">true</IsEnvironmentSpecificTest>
-    </PropertyGroup>
-    
-    <Message Importance="high" Text="Testing in NUnit: $(TestDir)\%(NUnitTestItem.Identity)" Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"/>
-	<Message Importance="high" Text="ENVIRONMENT SPECIFIC TEST SKIPPED: $(TestDir)\%(NUnitTestItem.Identity)" Condition="$(SkipEnvironmentSpecificTests) and $(IsEnvironmentSpecificTest)"/>
-    
-	<!--
-	Nunit runner is different version from lib in NuGet so we have to hardcode
-	
-    <XmlRead XPath="//package[@id='NUnit']/@version"
-             XmlFileName="$(TestProjectDir)\packages.config"
-			 Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)">
+    <XmlRead XPath="//package[@id='NUnit.Runners']/@version"
+             XmlFileName=".nuget\packages.config">
       <Output TaskParameter="Value" PropertyName="NUnitVersion"/>
     </XmlRead>
-    -->
 	
-	<PropertyGroup>
-	    <NUnitVersion>2.6.0.12051</NUnitVersion>
-    </PropertyGroup>
+	<Message Importance="high" Text="NUnit: $(PackageDir)\Nunit.Runners.$(NUnitVersion)\tools\nunit-console.exe"/>
 	
-    <Message Importance="high" Text="NUnit: $(PackageDir)\NUnit.Runners.$(NUnitVersion)\tools\nunit-console.exe" Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"/>
-
-	<NUnit ToolPath="$(PackageDir)\NUnit.Runners.$(NUnitVersion)\tools"
-		   Condition="!$(SkipEnvironmentSpecificTests) or !$(IsEnvironmentSpecificTest)"
-		   Assemblies="$(TestDir)\%(NUnitTestItem.Identity).dll"
-		   OutputXmlFile="$(TestOutputDir)\%(NUnitTestItem.Identity).results.nunit.xml"/>
+	<Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command='$(PackageDir)\Nunit.Runners.$(NUnitVersion)\tools\nunit-console.exe $(DllsToTest) /noshadow /result="$(TestOutputDir)\results.nunit.xml"' ContinueOnError="true">
+		<Output TaskParameter="exitcode" ItemName="exitcodes"/>
+	</Exec>
+	<Message Importance="High" Text="##teamcity[importData type='nunit' path='$(TestOutputDir)\results.nunit.xml']"/>
+	<Error Text="Tests failed" Condition="%(exitcodes.identity) > 0"/>
+	
   </Target>
 
   <Target Name="Document" Condition="$(GenerateDocs)">
@@ -230,30 +213,34 @@
     <Copy SourceFiles="@(HelpFiles)" DestinationFolder="$(PublicWebHelpDir)\%(RecursiveDir)"/>
   </Target>
   
-  <Target Name="PublishWeb" Condition="$(WebProjectDir) != ''" DependsOnTargets="$(PublishWebDependsOn)">
-	<Message Importance="high" Text="PublishWeb"/>
+  <Target Name="PublishWeb" Condition="@(WebProject) != ''" DependsOnTargets="$(PublishWebDependsOn)" Outputs="%(WebProject.Identity)">
+	<Message Importance="high" Text="PublishWeb - %(WebProject.WebProjectName)"/>
 	<ItemGroup>
-	  <WebFiles Include="$(WebProjectDir)\**\*.*"
-	            Exclude="$(WebProjectDir)\**\*.cs;
-				         $(WebProjectDir)\**\*.csproj;
-						 $(WebProjectDir)\**\*.csproj.user;
-						 $(WebProjectDir)\obj\**\*.*;
-						 $(WebProjectDir)\Web.*.config;
-						 $(WebProjectDir)\NHibernate.*.config;
-						 $(WebProjectDir)\packages.config"/>
+	  <WebFiles Include="%(WebProject.WebProjectDir)\**\*.*"
+	            Exclude="%(WebProject.WebProjectDir)\**\*.cs;
+				         %(WebProject.WebProjectDir)\**\*.csproj;
+						 %(WebProject.WebProjectDir)\**\*.csproj.user;
+						 %(WebProject.WebProjectDir)\obj\**\*.*;
+						 %(WebProject.WebProjectDir)\Web.*.config;
+						 %(WebProject.WebProjectDir)\NHibernate.*.config;
+						 %(WebProject.WebProjectDir)\packages.config"/>
 	</ItemGroup>
       	
-    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(WebDir)\%(RecursiveDir)"/>
-	
+	<PropertyGroup>
+      <WebLocation>$(WebDir)\%(WebProject.WebProjectName)</WebLocation>
+    </PropertyGroup>
+		
+    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(WebLocation)\%(RecursiveDir)"/>
+		
 	<ItemGroup>
-      <ZipWebFiles Include="$(WebDir)\**\*.*"/>
+      <ZipWebFiles Include="$(WebDir)\%(WebProject.WebProjectName)\**\*.*"/>
     </ItemGroup>
 	
 	<PropertyGroup>
-      <ZipWebFileName>$(DistributionDir)\$(ProductName)_Web$(ZipQualifier)</ZipWebFileName>
+      <ZipWebFileName>$(DistributionDir)\%(WebProject.WebProjectName)_Web$(ZipQualifier)</ZipWebFileName>
     </PropertyGroup>
     
-	<Zip Files="@(ZipWebFiles)" WorkingDirectory="$(WebDir)" ZipFileName="$(ZipWebFileName)"/>	
+	<Zip Files="@(ZipWebFiles)" WorkingDirectory="$(WebDir)\%(WebProject.WebProjectName)" ZipFileName="$(ZipWebFileName)"/>	
 	
   </Target>
   
@@ -273,14 +260,16 @@
 	</PropertyGroup>
 	
 	<Message Importance="high" Text="Version for %(NugetItem.Identity) is $(PackageVersion)"/>
+	
+	<CallTarget Targets="CopyBinDeployableAssemblies"/>
 
-    <XmlUpdate XmlFileName="%(NugetItem.Identity).nuspec"
+    <XmlUpdate XmlFileName="nuspec\%(NugetItem.Identity).nuspec"
                Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
                Prefix="n"
                XPath="//n:summary"
                Value="%(NugetItem.NugetPackageSummary) ($(Configuration))"/>
 
-    <XmlUpdate XmlFileName="%(NugetItem.Identity).nuspec"
+    <XmlUpdate XmlFileName="nuspec\%(NugetItem.Identity).nuspec"
                Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
                Prefix="n"
                XPath="//n:version"

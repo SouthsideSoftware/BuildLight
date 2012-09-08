@@ -5,14 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{94F8A509-3051-49DF-993F-79B87D32DC28}</ProjectGuid>
+    <ProjectGuid>{66852681-E589-43EE-A259-9C18E6A77FA4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DelcomSupport</RootNamespace>
-    <AssemblyName>DelcomSupport</AssemblyName>
+    <RootNamespace>BuildLight.Core</RootNamespace>
+    <AssemblyName>BuildLight.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\TeamCityBuildLight\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -36,13 +36,21 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net35\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,21 +61,41 @@
     <Compile Include="..\..\common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DelcomIndicatorState.cs" />
-    <Compile Include="DelcomLight.cs" />
-    <Compile Include="IDelcomLight.cs" />
-    <Compile Include="LowLevel\Debugging.cs" />
-    <Compile Include="LowLevel\DebuggingDeclarations.cs" />
-    <Compile Include="LowLevel\DelcomHID.cs" />
-    <Compile Include="LowLevel\DeviceManagement.cs" />
-    <Compile Include="LowLevel\DeviceManagementDeclarations.cs" />
-    <Compile Include="LowLevel\FileIODeclarations.cs" />
-    <Compile Include="LowLevel\Hid.cs" />
-    <Compile Include="LowLevel\HidDeclarations.cs" />
+    <Compile Include="BuildStatus.cs" />
+    <Compile Include="BuildStatusChecker.cs" />
+    <Compile Include="BuildStatusCollection.cs" />
+    <Compile Include="CastleWindsor\ContainerInstaller.cs" />
+    <Compile Include="CodeContracts\ParameterCheck.cs" />
+    <Compile Include="CodeContracts\PreconditionException.cs" />
+    <Compile Include="DelcomUsbLightBuildIndicator.cs" />
+    <Compile Include="IBuildIndicator.cs" />
+    <Compile Include="IBuildStatusChecker.cs" />
+    <Compile Include="IBuildStatusSource.cs" />
+    <Compile Include="IndicatorStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Server\BuildStatusServer.cs" />
+    <Compile Include="Server\IBuildStatusServer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DelcomSupport\DelcomSupport.csproj">
+      <Project>{94F8A509-3051-49DF-993F-79B87D32DC28}</Project>
+      <Name>DelcomSupport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -11,14 +11,14 @@
   <!-- Project name and description -->
   <PropertyGroup>
     <CompanyName>Southside Software, LLC</CompanyName>
-    <ProductName>TeamCityBuildLight</ProductName>
-    <ProductDescription>Support for driving some sort of external device off the status of one or more TeamCity build configurations</ProductDescription>
+    <ProductName>BuildLight</ProductName>
+    <ProductDescription>Support for driving some sort of external device off the status of one or more build configurations</ProductDescription>
   </PropertyGroup>
   
   <!-- NUnit Tests -->
-  <ItemGroup>
-    <NUnitTestItem Include="TeamCityBuildLight.Tests.Unit"/>
-  </ItemGroup>
+  <PropertyGroup>
+	<DllsToTest>$(MsBuildProjectDirectory)\tests\BuildLight.Tests.Unit\bin\$(Configuration)\BuildLight.Tests.Unit.dll</DllsToTest>
+  </PropertyGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\Tools\MSBuild\BuildSupport\Southside.Targets"/>
 </Project>

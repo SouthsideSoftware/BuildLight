@@ -1,4 +1,4 @@
-Framework for connecting a TeamCity status to a build light/lamp, audible notification and other sorts of things like mobile alerts.  Right now it only supports a red/green/blue LED light made by Delcom that connects to the USB port and is supported on Mac, Windows and Linux.  See below for more information.
+Framework for connecting a build server status to a build light/lamp, audible notification and other sorts of things like mobile alerts.  Right now it only supports TeamCity and a red/green/blue LED light made by Delcom that connects to the USB port and is supported on Mac, Windows and Linux.  See below for more information.
 
 Pretty soon you will be able to create your own plugins to provide other sorts of notification.
 
