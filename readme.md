@@ -1,18 +1,18 @@
-Beginning of framework for connecting a TeamCity build light or lamp.  Right now it only supports a red/green/blue LED light made by Delcom that connects to the USB port and is supported on Mac, Windows and Linux.  See below for more information.
+Framework for connecting a TeamCity status to a build light/lamp, audible notification and other sorts of things like mobile alerts.  Right now it only supports a red/green/blue LED light made by Delcom that connects to the USB port and is supported on Mac, Windows and Linux.  See below for more information.
+
+Pretty soon you will be able to create your own plugins to provide other sorts of notification.
+
+We will probably also add support for CruiseControl.Net and Jenkins.
 
 ##What we're working on
 
-See our [Trello Board](https://trello.com/board/team-city-build-light/504b4a2e72e2d9db2e3ede6e) to see what we have in the pipeline.  You can also vote on features there.  Send your suggestions, questions and bugs to teamcitybuildlight@southsidesoft.com.
+See our [Trello Board](https://trello.com/board/team-city-build-light/504b4a2e72e2d9db2e3ede6e) to see what we have in the pipeline.  You can also vote on features there.  Send your suggestions, questions and bugs to [teamcitybuildlight@southsidesoft.com](mailto://teamcitybuildlight@southsidesoft.com)
 
 
 ##Prerequisites
 
-* Visual Studio 2010
-* [Nuget 1.6 or Higher](http://www.nuget.org)
-
-These items can all be installed using [Microsoft's Web Platform Installer](http://www.microsoft.com/web/downloads/platform.aspx):
-
-* Visual Studio 2010 SP1
+* Visual Studio 2012
+* [Nuget 2.0 or Higher](http://www.nuget.org)
 
 ##Building
 
