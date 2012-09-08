@@ -15,8 +15,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("0.0.1")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("0.1.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]
 [assembly: AssemblyCopyright("Copyright (C) Southside Software, LLC 2012")]
 [assembly: AssemblyConfiguration("Debug")]
 [assembly: AssemblyCompany("Southside Software, LLC")]

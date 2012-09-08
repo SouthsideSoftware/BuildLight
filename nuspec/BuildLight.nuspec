@@ -3,7 +3,7 @@
   <metadata>
     <id>BuildLight</id>
     <title>Build indicator for build server.</title>
-    <version>0.0.1.0</version>
+    <version>0.1.0.0</version>
     <authors>Tom Cabanski</authors>
     <owners>Southside Software, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -11,6 +11,7 @@
     <summary>Build indicator for build server. (Debug)</summary>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <tags>TeamCity Cruise Control Build Lamp Indicator</tags>
+    <projectUrl>https://github.com/SouthsideSoftware/BuildLight</projectUrl>
   </metadata>
   <files>
     <file src="..\BuildOutput\bin\*.*" target="" />

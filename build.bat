@@ -1,2 +1,2 @@
 @echo off
-msbuild %* build.proj
+tools\msbuild\msbuild %* build.proj
