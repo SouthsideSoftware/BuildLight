@@ -6,7 +6,7 @@ We will probably also add support for CruiseControl.Net and Jenkins.
 
 ##Contact Us
 
-See our [Trello Board](https://trello.com/board/team-city-build-light/504b4a2e72e2d9db2e3ede6e) to see what we have in the pipeline.  You can also vote on features there.  Send your suggestions, questions and bugs to [teamcitybuildlight@southsidesoft.com](mailto://teamcitybuildlight@southsidesoft.com)
+See our [Trello Board](https://trello.com/board/build-light/504b4a2e72e2d9db2e3ede6e) to see what we have in the pipeline.  You can also vote on features there.  Send your suggestions, questions and bugs to [teamcitybuildlight@southsidesoft.com](mailto://teamcitybuildlight@southsidesoft.com)
 
 ## Nuget
 
