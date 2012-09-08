@@ -27,7 +27,9 @@ See our [Trello Board](https://trello.com/board/team-city-build-light/504b4a2e72
 
 ##Building
 
-* Double click on clicktobuild.bat or open a command window and type "build<return>".
+* Open in Visual Studio 2012 and build OR
+* Double click on clicktobuild.bat OR
+* Open a command window and type "build<return>".
 
 This project uses Nuget to pull packages and the packages are not placed into the repository.  Therefore, you should build as shown above after a clone and before opening the solution in VS.NET to get the latest packages.  NuGet will check for latest packages whenever you build in VS.NET or at the command line.  
 
