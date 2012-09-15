@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Buildlight by SouthsideSoftware</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Buildlight</h1>
+        <h2>Basic Framework for Connecting a Physical Build Indicator with a Build Server</h2>
+        <a href="https://github.com/SouthsideSoftware/BuildLight" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>Framework for connecting a build server status to a build light/lamp, audible notification and other sorts of things like mobile alerts.  Right now it only supports TeamCity and a red/green/blue LED light made by Delcom that connects to the USB port and is supported on Mac, Windows and Linux.  See below for more information.</p>
+
+<p>Pretty soon you will be able to create your own plugins to provide other sorts of notification.</p>
+
+<p>We will probably also add support for CruiseControl.Net and Jenkins.</p>
+
+<h2>Contact Us</h2>
+
+<p>See our <a href="https://trello.com/board/build-light/504b4a2e72e2d9db2e3ede6e">Trello Board</a> to see what we have in the pipeline.  You can also vote on features there.  Send your suggestions, questions and bugs to <a href="mailto://teamcitybuildlight@southsidesoft.com">teamcitybuildlight@southsidesoft.com</a></p>
+
+<h2>Nuget</h2>
+
+<p>You can obtain the latest pre-built version from <a href="https://nuget.org/packages/BuildLight">Nuget</a></p>
+
+<h2>Prerequisites</h2>
+
+<ul>
+<li>Visual Studio 2012</li>
+<li><a href="http://www.nuget.org">Nuget 2.0 or Higher</a></li>
+</ul><h2>Building</h2>
+
+<ul>
+<li>Open in Visual Studio 2012 and build OR</li>
+<li>Double click on clicktobuild.bat OR</li>
+<li>Open a command window and type "build".</li>
+</ul><p>This project uses Nuget to pull packages and the packages are not placed into the repository.  NuGet will check for latest packages whenever you build in VS.NET or at the command line.  </p>
+
+<h2>Configuring and Installing the Service</h2>
+
+<ul>
+<li>In Nlog.config, adjust the location of the log file.  Defaults to a folder in \logs.</li>
+<li>Install the service using the following command line:</li>
+</ul><pre><code>BuildLight.Service install
+</code></pre>
+
+<ul>
+<li>Go to the service control manager and start the BuildLight service.</li>
+</ul><p>Consult the <a href="https://github.com/Topshelf/Topshelf/wiki/Command-Line">TopShelf Wiki</a> for more configuration options.</p>
+
+<h2>Supported Versions of TeamCity</h2>
+
+<ul>
+<li>7.x and higher</li>
+</ul><h2>Supported Devices</h2>
+
+<p>The base project supports the <a href="http://www.delcomproducts.com/products_USBLMP.asp">Delcom USB HID Visual Signal Indicator RGB</a>.  It will indicate status as follows:</p>
+
+<ul>
+<li>Off when it cannot reach the configured TeamCity server or some other error has occured</li>
+<li>Flashing blue when any configuration is building on the server</li>
+<li>Flashing red when no configuration is building and at least one configuration's most recent build has failed</li>
+<li>Green when no configuration is building and all configuration's most recent builds have succeeeded</li>
+</ul><h2>License</h2>
+
+<p>The application and source code are licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>:</p>
+
+<p>Copyright (c) 2012 Southside Software, LLC</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/SouthsideSoftware/BuildLight/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/SouthsideSoftware/BuildLight/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/SouthsideSoftware/BuildLight"></a> is maintained by <a href="https://github.com/SouthsideSoftware">SouthsideSoftware</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
