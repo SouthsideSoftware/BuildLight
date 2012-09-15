@@ -16,9 +16,9 @@
   </PropertyGroup>
   
   <!-- NUnit Tests -->
-  <PropertyGroup>
-	<DllsToTest>$(MsBuildProjectDirectory)\tests\BuildLight.Tests.Unit\bin\$(Configuration)\BuildLight.Tests.Unit.dll</DllsToTest>
-  </PropertyGroup>
+  <ItemGroup>
+	<DllsToTest Include="$(MsBuildProjectDirectory)\tests\BuildLight.Tests.Unit\bin\$(Configuration)\BuildLight.Tests.Unit.dll"/>
+  </ItemGroup>
   
   <!-- Binary files to publish -->
   <PropertyGroup>

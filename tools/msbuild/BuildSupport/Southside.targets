@@ -148,8 +148,9 @@
   <!-- Due to issues with Nuget, the runner package must be added at the solution level and 
        then the reference must be manually copied into the package.config of one of the projects so that it is
 	   always pulled down during a build.  Ronaele has it in Roanele.Web.UI.Tests-->
-  <Target Name="Test" Condition="$(DllsToTest) != ''">
+  <Target Name="Test" Condition="@(DllsToTest) != ''">
     <Message Importance="high" Text="Test"/>
+	<CallTarget Targets="CheckTestDllsExist"/>
     <XmlRead XPath="//package[@id='NUnit.Runners']/@version"
              XmlFileName=".nuget\packages.config">
       <Output TaskParameter="Value" PropertyName="NUnitVersion"/>
@@ -157,12 +158,21 @@
 	
 	<Message Importance="high" Text="NUnit: $(PackageDir)\Nunit.Runners.$(NUnitVersion)\tools\nunit-console.exe"/>
 	
-	<Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command='$(PackageDir)\Nunit.Runners.$(NUnitVersion)\tools\nunit-console.exe $(DllsToTest) /noshadow /result="$(TestOutputDir)\results.nunit.xml"' ContinueOnError="true">
+	<PropertyGroup>
+	  <DllList>@(DllsToTest, ' ')</DllList>
+	</PropertyGroup>
+	<Message Importance="high" Text="Dlls To Test: $(DllList)"/>
+	
+	<Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command='$(PackageDir)\Nunit.Runners.$(NUnitVersion)\tools\nunit-console.exe $(DllList) /noshadow /result="$(TestOutputDir)\results.nunit.xml"' ContinueOnError="true">
 		<Output TaskParameter="exitcode" ItemName="exitcodes"/>
 	</Exec>
 	<Message Importance="High" Text="##teamcity[importData type='nunit' path='$(TestOutputDir)\results.nunit.xml']"/>
 	<Error Text="Tests failed" Condition="%(exitcodes.identity) > 0"/>
 	
+  </Target>
+  
+  <Target Name="CheckTestDllsExist" Outputs="%(DllsToTest.Identity)">
+    <Error Text="Test dll  %(DllsToTest.Identity) does not exist" Condition="!Exists(%(DllsToTest.Identity))"/>
   </Target>
 
   <Target Name="Document" Condition="$(GenerateDocs)">
