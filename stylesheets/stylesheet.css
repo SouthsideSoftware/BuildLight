@@ -477,3 +477,20 @@ footer a:hover {
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) {}
+
+.companyName {
+color:white;
+}
+
+a.companyName {
+color:white;
+}
+
+a.companyName:visited{
+color:white;
+}
+
+a.companyName:hover{
+color:white;
+font-weight:bold;
+}
