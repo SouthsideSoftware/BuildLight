@@ -85,18 +85,6 @@
     <Copy SourceFiles="temp.config_output" DestinationFiles="%(ConfigItem.ConfigFile)" />
   </Target>
 
-  <Target Name="InstallPackages" DependsOnTargets="CreateNugetCredentials">
-    <Message Importance="high" Text="Installing packages for solution"/>
-    <XmlQuery XmlFileName="$(PackageDir)\repositories.config" XPath="//repositories/*">
-      <Output TaskParameter="Values" ItemName="Values"/>
-    </XmlQuery>
-    <ItemGroup>
-      <ProjectWithPackages Include="%(Values.path)"/>
-    </ItemGroup>
-    <Exec WorkingDirectory="$(PackageDir)" 
-          Command="cmd /c $(NuGet) install %(ProjectWithPackages.Identity) -s $(PublicNugetUrl) &lt; $(OutputDir)\credentials.txt"/>
-  </Target>
-  
   <Target Name="Version">
     <Message Importance="high" Text="Version"/>
     <Time>
@@ -264,19 +252,12 @@
 	
 	<PropertyGroup>
 		<PackageVersion Condition="%(NugetItem.OverrideVersion) != ''">%(NugetItem.OverrideVersion)</PackageVersion>
-		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND !$(UseSemanticVersioning)">$(AppVersion).$(BuildNumber)</PackageVersion>
-		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(UseSemanticVersioning) AND $(SemanticVersion) == ''">$(AppVersion)</PackageVersion>
-		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(UseSemanticVersioning) AND $(SemanticVersion) != ''">$(AppVersion)-$(SemanticVersion)</PackageVersion>
+		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(SemanticVersion) == ''">$(AppVersion).$(BuildNumber)</PackageVersion>
+		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(SemanticVersion) != ''">$(AppVersion).$(BuildNumber)-$(SemanticVersion)</PackageVersion>
 	</PropertyGroup>
 	
 	<Message Importance="high" Text="Version for %(NugetItem.Identity) is $(PackageVersion)"/>
 	
-	<XmlUpdate XmlFileName="nuspec\%(NugetItem.Identity).nuspec"
-               Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
-               Prefix="n"
-               XPath="//n:summary"
-               Value="%(NugetItem.NugetPackageSummary) ($(Configuration))"/>
-
     <XmlUpdate XmlFileName="nuspec\%(NugetItem.Identity).nuspec"
                Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
                Prefix="n"
@@ -286,31 +267,21 @@
     <Exec WorkingDirectory="$(NuGetPackageDir)" Command="$(NuGet) pack $(MSBuildProjectDirectory)\nuspec\%(NugetItem.Identity).nuspec"/>
   </Target>
 
-  <Target Name="PublishNugetPackages" Condition="$(PublishNugetPackages)" DependsOnTargets="CreateNugetCredentials">
+  <!-- For this to work, you must set the api key in the root dir of your project using nuget setapikey logged on as the user that will do the building -->
+  <Target Name="PublishNugetPackages" Condition="$(PublishNugetPackages)">
     <Message Importance="high" Text="PublishNugetPackages"/>
     <CallTarget Targets="PublishNugetPackage"/>
   </Target>
   
   <Target Name="PublishNugetPackage" Outputs="%(NugetItem.Identity)" Condition="$(PublishNugetPackages)">
-	<Message Importance="high" Text="Publish package %(NugetItem.NugetPackageId)" Condition="%(NugetItem.NugetPushUrl) != ''"/>
+	<Message Importance="high" Text="Publish package %(NugetItem.NugetPackageId)"/>
 	
 	<PropertyGroup>
 		<PackageVersion Condition="%(NugetItem.OverrideVersion) != ''">%(NugetItem.OverrideVersion)</PackageVersion>
-		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND !$(UseSemanticVersioning)">$(AppVersion).$(BuildNumber)</PackageVersion>
-		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(UseSemanticVersioning) AND $(SemanticVersion) == ''">$(AppVersion)</PackageVersion>
-		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(UseSemanticVersioning) AND $(SemanticVersion) != ''">$(AppVersion)-$(SemanticVersion)</PackageVersion>
-		<PushUrl Condition="%(NugetItem.NugetPushUrl) == '$(BlindsNugetServer)'">$(BlindsNugetPushUrl)</PushUrl>
-		<PushUrl Condition="%(NugetItem.NugetPushUrl) != '$(BlindsNugetServer)'">%(NugetItem.NugetPushUrl)</PushUrl>
+		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(SemanticVersion) == ''">$(AppVersion).$(BuildNumber)</PackageVersion>
+		<PackageVersion Condition="%(NugetItem.OverrideVersion) == '' AND $(SemanticVersion) != ''">$(AppVersion).$(BuildNumber)-$(SemanticVersion)</PackageVersion>
 	</PropertyGroup>
 	
-    <Exec WorkingDirectory="$(NuGetPackageDir)" Command="cmd.exe /c $(NuGet) push %(NugetItem.NugetPackageId).$(PackageVersion).nupkg  %(NugetItem.NugetApiKey) -source $(PushUrl) &lt; $(OutputDir)\credentials.txt" 
-	  Condition="%(NugetItem.NugetPushUrl) != ''"/>
-  </Target>
-  
-  <Target Name="CreateNugetCredentials">
-	<ItemGroup>
-	  <FileName Include="$(OutputDir)\credentials.txt"/>
-	</ItemGroup>
-	<WriteLinesToFile File="@(FileName)" Lines="$(NugetUserName);$(NugetPassword)" Overwrite="true"/>
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="$(NuGet) push $(NugetPackageDir)\%(NugetItem.NugetPackageId).$(PackageVersion).nupkg"/>
   </Target>
 </Project>

@@ -2,13 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>BuildLight</id>
-    <title>Build indicator for build server.</title>
-    <version>0.2.0.0</version>
+    <title>Build Indicator for Build Server</title>
+    <version>0.2.3.0</version>
     <authors>Tom Cabanski</authors>
     <owners>Southside Software, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Build indicator for build server.</description>
-    <summary>Build indicator for build server. (Debug)</summary>
+    <description>
+	BuildLight provides an extensible framework for connecting a build server status to a build light/lamp, audible notification and other sorts of things like mobile alerts. 
+	Right now it only supports TeamCity and a red/green/blue LED light made by Delcom that connects to the USB port.
+	</description>
+    <summary>A Windows Service to update a physical build indicator based on the status of one or more projects in a continous integration build server</summary>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <tags>TeamCity Cruise Control Build Lamp Indicator</tags>
     <projectUrl>http://southsidesoft.com/BuildLight/</projectUrl>
