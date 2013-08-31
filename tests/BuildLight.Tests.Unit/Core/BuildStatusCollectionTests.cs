@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BuildLight.Core;
 using BuildLight.Core.CodeContracts;
 using FluentAssertions;
@@ -112,6 +113,35 @@ namespace BuildLight.Tests.Unit.Core
 
             new BuildStatusCollection(teamCityData).Status.Should().Be(IndicatorStatus.Failure);
         }
+
+        [Test]
+        public void ShouldHaveStatusFailureIfNoProjectBuildingAndAtLeastOneProjectFailureAndConfigurationSpecifiesTheFailingConfigurationShouldBeChecked()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Failure\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "<Project activity=\"Sleeping\" lastBuildLabel=\"6\" lastBuildStatus=\"Success\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Release\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData, new List<string>{"BuildLight :: Debug"}).Status.Should().Be(IndicatorStatus.Failure);
+        }
+
+        [Test]
+        public void ShouldHaveStatusSuccessIfNoProjectBuildingAndAtLeastOneProjectFailureAndConfigurationDoesNotSpecifyTheFailingConfigurationShouldBeChecked()
+        {
+            string teamCityData =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Projects>" +
+                "<Project activity=\"Has pending changes\" lastBuildLabel=\"6\" lastBuildStatus=\"Failure\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Debug\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "<Project activity=\"Sleeping\" lastBuildLabel=\"6\" lastBuildStatus=\"Success\" " +
+                "lastBuildTime=\"2012-05-12T10:51:45.098-05:00\" name=\"BuildLight :: Release\" webUrl=\"http://localhost:81/viewType.html?buildTypeId=bt2\"/>" +
+                "</Projects>";
+
+            new BuildStatusCollection(teamCityData, new List<string> { "BuildLight :: Release" }).Status.Should().Be(IndicatorStatus.Success);
+        }
+
 
         [Test]
         public void ShouldHaveStatusSuccessIfNoProjectBuildingAndAllProjectsShowSuccess()

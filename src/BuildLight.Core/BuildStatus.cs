@@ -14,6 +14,7 @@ namespace BuildLight.Core
         public string Project { get; private set; }
         public string Configuration { get; private set; }
         public string Activity { get; private set; }
+        public string Name { get; private set; }
 
         public BuildStatus(XElement projectElement)
         {
@@ -22,10 +23,10 @@ namespace BuildLight.Core
             try
             {
                 LastBuildStatus = GetAttributeValue(projectElement, "lastBuildStatus");
-                var name = GetAttributeValue(projectElement, "name");
-                if (name != null)
+                Name = GetAttributeValue(projectElement, "name");
+                if (Name != null)
                 {
-                    var nameParts = Regex.Split(name, "::");
+                    var nameParts = Regex.Split(Name, "::");
                     if (nameParts.Length == 2)
                     {
                         Project = nameParts[0].Trim();

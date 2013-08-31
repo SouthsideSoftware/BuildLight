@@ -9,12 +9,14 @@ namespace BuildLight.Core
 {
     public class BuildStatusCollection : List<BuildStatus>, IBuildStatusSource
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        readonly IList<string> onlyCheckTheseConfigurationsForFailure;
+        private Logger logger = LogManager.GetCurrentClassLogger(); 
 
         public BuildStatusCollection(){}
 
-        public BuildStatusCollection(string projectXml)
+        public BuildStatusCollection(string projectXml, IList<string> onlyCheckTheseConfigurationsForFailure = null)
         {
+            this.onlyCheckTheseConfigurationsForFailure = onlyCheckTheseConfigurationsForFailure;
             ParameterCheck.StringRequiredAndNotWhitespace(projectXml, "projectXml");
 
             try
@@ -37,7 +39,7 @@ namespace BuildLight.Core
             {
                 if (Count == 0) return IndicatorStatus.Unknown;
                 if (this.Any(s => s.Activity == "Building")) return IndicatorStatus.Building;
-                if (this.Any(s => s.LastBuildStatus == "Failure")) return IndicatorStatus.Failure;
+                if (this.Any(s => s.LastBuildStatus == "Failure" && (onlyCheckTheseConfigurationsForFailure == null || onlyCheckTheseConfigurationsForFailure.Contains(s.Name)))) return IndicatorStatus.Failure;
                 return IndicatorStatus.Success;
             }
         }

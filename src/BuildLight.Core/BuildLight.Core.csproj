@@ -77,6 +77,8 @@
     <Compile Include="CastleWindsor\ContainerInstaller.cs" />
     <Compile Include="CodeContracts\ParameterCheck.cs" />
     <Compile Include="CodeContracts\PreconditionException.cs" />
+    <Compile Include="Configuration\ApplicationConfiguration.cs" />
+    <Compile Include="Configuration\IApplicationConfiguration.cs" />
     <Compile Include="DelcomUsbLightBuildIndicator.cs" />
     <Compile Include="IBuildIndicator.cs" />
     <Compile Include="IBuildStatusChecker.cs" />
