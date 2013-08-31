@@ -42,8 +42,8 @@
   
   <UsingTask TaskName="NUnit" AssemblyFile="$(teamcity_dotnet_nunitlauncher_msbuild_task)" Condition="$(InTeamCity)"/>
  
-  <Target Name="Dist" DependsOnTargets="CheckObsolete;Clean;TransformConfigs;Version;Build;Test;Document;Publish"/>
-  <Target Name="TeamCityBuild" DependsOnTargets="CheckObsolete;Clean;TransformConfigs;Version;Build;Test"/>
+  <Target Name="Dist" DependsOnTargets="CheckObsolete;Clean;TransformConfigs;Version;InstallSolutionLevelPackages;Build;Test;Document;Publish"/>
+  <Target Name="TeamCityBuild" DependsOnTargets="CheckObsolete;Clean;Version;InstallSolutionLevelPackages;Build;Test"/>
   <Target Name="TeamCityPublish" DependsOnTargets="Document;Publish"/>
   
   <Target Name="CheckObsolete">
@@ -98,6 +98,10 @@
             AssemblyConfiguration="$(Configuration)"
             AssemblyCompany="$(CompanyName)"
             AssemblyProduct="$(ProductDescription) ($(Configuration) DB: $(SchemaVersion))"/>
+
+    <FileUpdate Files="$(MSBuildProjectDirectory)\common\CommonAssemblyInfo.cs"
+                Regex="Version:(\d+)\.(\d+)\.(\d+)\.(\d+)"
+                ReplacementText="Version:$1.$2" />
 
     <CallTarget Targets="VersionHelp"/>
   </Target>
@@ -283,5 +287,10 @@
 	</PropertyGroup>
 	
     <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="$(NuGet) push $(NugetPackageDir)\%(NugetItem.NugetPackageId).$(PackageVersion).nupkg"/>
+  </Target>
+
+  <Target Name="InstallSolutionLevelPackages">
+    <Message Importance="high" Text="Install solution level packages"/>
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\.nuget" Command="nuget install -o $(MSBuildProjectDirectory)\packages"/>
   </Target>
 </Project>
