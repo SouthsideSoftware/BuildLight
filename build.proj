@@ -4,7 +4,7 @@
 
   <!-- Version Information -->
   <PropertyGroup>
-    <AppVersion>0.2.3</AppVersion>
+    <AppVersion>1.0.0</AppVersion>
     <SchemaVersion>0</SchemaVersion>
   </PropertyGroup>
 
